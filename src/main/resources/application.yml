@@ -1,0 +1,37 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://47.97.183.209:3306/ptxz?characterEncoding=utf8
+      password: 123456
+      username: root
+  mail:
+    host: smtp.qq.com
+    username: 1249805139@qq.com
+    password: qaqpdgixsapmhjaa
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  cache:
+    redis:
+      time-to-live: 1800000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: AUTO
+
+file:
+  base: c:/img/
+sendCode:
+  from: 1249805139@qq.com
+  subject: 跑腿闲置
