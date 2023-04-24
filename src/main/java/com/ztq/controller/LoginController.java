@@ -34,7 +34,7 @@ public class LoginController {
     @PostMapping("/emaillogin")
     public Result<Object> login(@RequestBody UserDto userDto) {
         //获取原验证码
-        Object code1 = redisTemplate.opsForValue().get(userDto.getEmail());
+        String code1 =(String) redisTemplate.opsForValue().get(userDto.getEmail());
         if (userDto.getCode().equals(code1)) {
             //先判断是否存在 不存在则注册
             LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
@@ -60,7 +60,7 @@ public class LoginController {
                 //将用户存入缓存
                  key="user_"+token;
                 redisTemplate.opsForValue().set(key,one,2,TimeUnit.HOURS);
-
+                redisTemplate.delete(userDto.getEmail());
                 return Result.success(one);
             } else {
                 //未注册登录
@@ -83,7 +83,7 @@ public class LoginController {
                 userService.save(one);
                 key="user_"+token;
                 redisTemplate.opsForValue().set(key,one,2,TimeUnit.HOURS);
-
+                redisTemplate.delete(userDto.getEmail());
                 return Result.success(one);
             }
         }
@@ -101,10 +101,6 @@ public class LoginController {
             String time=LocalDateTime.now()+"";
             String token1= one.getEmail()+one.getUserName()+time;
             String token = DigestUtils.md5DigestAsHex(token1.getBytes());
-            if (one.getIsManager()==1){
-                token=token+"manager";
-                one.setToken(token);
-            }
             one.setToken(token);
             userService.updateById(one);
             redisTemplate.opsForValue().set("user_"+token,one,2,TimeUnit.HOURS);
@@ -146,9 +142,7 @@ public class LoginController {
         one=new User();
         BeanUtils.copyProperties(userDto,one,"code");
         userService.save(one);
-
         redisTemplate.delete(userDto.getEmail());
-
         return Result.success("注册成功");
     }
 
