@@ -10,8 +10,8 @@ public class User implements Serializable {
     private String email;
     private String userName;
     private String head;
-    private Float money;
-    private Float freezeMoney;
+    private Float money=0.0f;
+    private Float freezeMoney=0.0f;
     private Integer status=0;
 
     private Integer isManager;

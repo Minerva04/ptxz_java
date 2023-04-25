@@ -11,9 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.UUID;
 
 @RestController
@@ -41,8 +39,6 @@ public class FileController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-
         return Result.success(fileName);
     }
 
@@ -50,7 +46,7 @@ public class FileController {
     public Result<String> downLoad(String name, HttpServletResponse response){
         String fileName=base+name;
 
-        try {
+        /*try {
             FileInputStream fileInputStream=new FileInputStream(new File(fileName));
             ServletOutputStream outputStream = response.getOutputStream();
             int len;
@@ -60,6 +56,17 @@ public class FileController {
                 outputStream.flush();
             }
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }*/
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileName));
+             BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream())) {
+
+            byte[] buffer = new byte[8192]; // or other appropriate size
+            int bytesRead;
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                bos.write(buffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return Result.success("下载成功");

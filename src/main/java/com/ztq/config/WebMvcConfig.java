@@ -1,6 +1,6 @@
 package com.ztq.config;
 
-import com.ztq.Interceptor.LoginCheckInterceptor;
+import com.ztq.interceptor.LoginCheckInterceptor;
 import com.ztq.comment.JacksonObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

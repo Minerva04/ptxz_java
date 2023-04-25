@@ -1,20 +1,43 @@
 server:
-  port: 8080
+  port: 9000
 spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://47.97.183.209:3306/ptxz?characterEncoding=utf8
+      #url: jdbc:mysql://47.97.183.209:3306/ptxz?characterEncoding=utf8
+      url: jdbc:mysql://localhost:3306/ptxz?characterEncoding=utf8
       password: 123456
       username: root
+  #mail:
+    #host: smtp.qq.com
+   # username: 1249805139@qq.com
+    #password: qaqpdgixsapmhjaa
   mail:
-    host: smtp.qq.com
-    username: 1249805139@qq.com
-    password: qaqpdgixsapmhjaa
+      # 邮件服务器地址
+      host: smtp.qq.com
+      # 协议 默认就是smtp
+      protocol: smtp
+      # 编码格式 默认就是utf-8
+      default-encoding: utf-8
+      # 邮箱
+      username: 1249805139@qq.com
+      # 16位授权码 不是邮箱密码
+      password: qaqpdgixsapmhjaa
+
+      # smtp的指定端口 使用465要将protocol改为smtps
+      port: 587
+      # 设置开启ssl
+      properties:
+        mail:
+          stmp:
+            ssl:
+              enable: true
+
   redis:
     host: localhost
     port: 6379
     database: 0
+    password: 123456
   cache:
     redis:
       time-to-live: 1800000
@@ -31,7 +54,8 @@ mybatis-plus:
       id-type: AUTO
 
 file:
-  base: c:/img/
+  #base: c:/img/
+  base: /usr/local/ptxz/img/
 sendCode:
   from: 1249805139@qq.com
   subject: 跑腿闲置
