@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (request.getRequestURI().contains("login")||request.getRequestURI().contains("file")){
+        if (request.getRequestURI().contains("login")||request.getRequestURI().contains("file")||request.getRequestURI().contains("menu")){
             return true;
         }
         if (request.getHeader("Authorization")==null){

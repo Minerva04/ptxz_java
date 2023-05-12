@@ -14,7 +14,7 @@ public class User implements Serializable {
     private Float freezeMoney=0.0f;
     private Integer status=0;
 
-    private Integer isManager;
+    private Integer isManager=0;
     private String token;
     private String password;
 }

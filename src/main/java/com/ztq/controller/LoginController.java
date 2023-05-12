@@ -51,10 +51,7 @@ public class LoginController {
 
                 //更新token
                 one.setToken(token);
-                /*if (one.getIsManager()==1){
-                    token=token+"manager";
-                    one.setToken(token);
-                }*/
+
                 //更新user
                 userService.updateById(one);
                 //将用户存入缓存
@@ -79,7 +76,9 @@ public class LoginController {
                 String token1= one.getEmail()+one.getUserName()+time;
                 String token = DigestUtils.md5DigestAsHex(token1.getBytes());
                 one.setToken(token);
-                one.setPassword(userDto.getEmail());
+                //one.setPassword(userDto.getEmail());
+                one.setPassword("111111");
+                one.setHead("default.jpg");
                 userService.save(one);
                 key="user_"+token;
                 redisTemplate.opsForValue().set(key,one,2,TimeUnit.HOURS);
